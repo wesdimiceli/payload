@@ -5,11 +5,13 @@ import path from 'path'
 
 import { buildConfigWithDefaults } from '../buildConfigWithDefaults.js'
 import { devUser } from '../credentials.js'
+import { createTestBucket } from '../plugin-cloud-storage/utils.js'
 import { Media } from './collections/Media.js'
 import { MediaWithPrefix } from './collections/MediaWithPrefix.js'
 import { MediaWithSignedDownloads } from './collections/MediaWithSignedDownloads.js'
 import { Users } from './collections/Users.js'
 import { mediaSlug, mediaWithPrefixSlug, mediaWithSignedDownloadsSlug, prefix } from './shared.js'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -35,6 +37,8 @@ export default buildConfigWithDefaults({
         password: devUser.password,
       },
     })
+
+    await createTestBucket()
   },
   plugins: [
     s3Storage({
